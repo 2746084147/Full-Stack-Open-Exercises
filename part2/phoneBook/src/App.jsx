@@ -63,11 +63,11 @@ const App = () => {
             setNewNumber('')
             // When update successfully, show the message.
             setErrorMessage(`Changed ${newName}`)
-            // After 5 seconds the message will disappear
             setTimeout(() => setErrorMessage(''), 5000)
           })
           .catch(error => {
-            setErrorMessage(`Information of ${newName} has already been removed from server.`)
+            setErrorMessage(error.response.data.error)
+
             setTimeout(() => setErrorMessage(''), 5000)
             setNewName('')
             setNewNumber('')
@@ -82,8 +82,15 @@ const App = () => {
         setNewNumber('')
         // When update successfully, show the message.
         setErrorMessage(`Added ${newName}`)
-        // After 5 seconds the message will disappear
         setTimeout(() => setErrorMessage(''), 5000)
+      })
+      .catch(error => {
+        setErrorMessage(error.response.data.error)
+        // console.log(error.response);
+        
+        setTimeout(() => setErrorMessage(''), 5000)
+        setNewName('')
+        setNewNumber('')
       })
     }
   }
@@ -93,11 +100,15 @@ const App = () => {
       noteService
         .remove(element.id)
         .then(response => {
-          // console.log(response.data);
-          setPersons(persons.filter(element => element.name !== response.data.name))
+          // console.log(response);
+          setPersons(persons.filter(e => e.name !== element.name))
+          // console.log(persons);
+          
+          setErrorMessage(`Deleted ${element.name}`)
+          setTimeout(() => setErrorMessage(''), 5000)
         })
         .catch(error => {
-          setErrorMessage(`Information of ${newName} has already been removed from server.`)
+          setErrorMessage(error.response.data.error)
           setTimeout(() => setErrorMessage(''), 5000)
         })
     }

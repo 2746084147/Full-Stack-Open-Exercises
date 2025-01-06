@@ -14,6 +14,7 @@ const Items = ({flag, arr, filter,handleDelete}) => {
   }
   const output = getShow(flag, arr, filter)
   // console.log(Array.isArray(output));
+  // console.log(output);
   
   return output.map((element)=>{
     return <div key={element.id}>
